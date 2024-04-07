@@ -8,27 +8,31 @@ import 'package:youapp_frontend/register/register.dart';
 
 class AppRouter {
   static final GoRouter routes = GoRouter(
-    initialLocation: AppRoute.profile,
+    initialLocation: AppRoute.login,
     navigatorKey: App.instance.navigator,
     routes: [
       GoRoute(
         path: AppRoute.login,
-        pageBuilder: (context, state) => _transitionPage(const LoginScreen()),
+        pageBuilder: (context, state) =>
+            _transitionPage(state, const LoginScreen()),
       ),
       GoRoute(
         path: AppRoute.register,
         pageBuilder: (context, state) =>
-            _transitionPage(const RegisterScreen()),
+            _transitionPage(state, const RegisterScreen()),
       ),
       GoRoute(
         path: AppRoute.profile,
-        pageBuilder: (context, state) => _transitionPage(const ProfileScreen()),
+        pageBuilder: (context, state) =>
+            _transitionPage(state, const ProfileScreen()),
       ),
     ],
   );
 
-  static CustomTransitionPage _transitionPage(Widget child) {
+  static CustomTransitionPage _transitionPage(
+      GoRouterState state, Widget child) {
     return CustomTransitionPage(
+      key: state.pageKey,
       child: child,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
