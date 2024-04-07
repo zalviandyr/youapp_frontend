@@ -4,15 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youapp_frontend/core/core.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  void _toRegister() => context.push(AppRoute.register);
+class _RegisterScreenState extends State<RegisterScreen> {
+  void _toLogin() => context.pop();
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +24,35 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Login',
+                'Register',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: 25.h),
               const InputField(
+                name: 'email',
+                hintText: 'Enter Email',
+                type: InputType.email,
+              ),
+              SizedBox(height: 15.h),
+              const InputField(
                 name: 'username',
-                hintText: 'Enter Username/Email',
+                hintText: 'Create Username',
               ),
               SizedBox(height: 15.h),
               const InputField(
                 name: 'password',
-                hintText: 'Enter Password',
+                hintText: 'Create Password',
+                type: InputType.password,
+              ),
+              SizedBox(height: 15.h),
+              const InputField(
+                name: 'confirmPassword',
+                hintText: 'Confirm Password',
                 type: InputType.password,
               ),
               SizedBox(height: 15.h),
               Button(
-                label: 'Login',
+                label: 'Register',
                 onPressed: () {},
               ),
               SizedBox(height: 35.h),
@@ -48,13 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: RichText(
                   text: TextSpan(
                     children: [
-                      const TextSpan(
-                        text: 'No account? ',
-                      ),
+                      const TextSpan(text: 'Have an account? '),
                       TextSpan(
-                        text: 'Register here',
+                        text: 'Login here',
                         style: const TextStyle(color: Pallette.golden),
-                        recognizer: TapGestureRecognizer()..onTap = _toRegister,
+                        recognizer: TapGestureRecognizer()..onTap = _toLogin,
                       ),
                     ],
                   ),

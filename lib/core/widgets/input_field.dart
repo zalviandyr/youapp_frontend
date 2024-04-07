@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:youapp_frontend/core/core.dart';
 
-enum InputType { text, password }
+enum InputType { text, password, email }
 
 class InputField extends StatefulWidget {
   final String name;
@@ -38,6 +38,9 @@ class _InputFieldState extends State<InputField> {
       name: widget.name,
       obscureText: _isObscure,
       obscuringCharacter: '*',
+      keyboardType: widget.type == InputType.email
+          ? TextInputType.emailAddress
+          : TextInputType.text,
       decoration: InputDecoration(
         isDense: true,
         hintText: widget.hintText,
