@@ -14,6 +14,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   void _toRegister() => context.push(AppRoute.register);
 
+  void _loginAction() {
+    context.pushReplacement(AppRoute.profile);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GradientScaffold(
@@ -41,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 15.h),
               Button(
                 label: 'Login',
-                onPressed: () {},
+                onPressed: _loginAction,
               ),
               SizedBox(height: 35.h),
               Center(

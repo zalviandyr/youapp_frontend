@@ -10,4 +10,6 @@ class Pallette {
   static const Color buttonGradient2 = Color(0xFF4599DB);
 
   static const Color defaultScaffold = Color(0xFF09141A);
+  static const Color blackPrimary = Color(0xFF0E191F);
+  static const Color blackSecondary = Color(0xFF162329);
 }
