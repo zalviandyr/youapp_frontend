@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientScaffold(
       body: ListView(
         padding: EdgeInsets.only(top: 50.h),
         children: [
