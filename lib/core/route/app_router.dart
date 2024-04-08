@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:youapp_frontend/core/core.dart';
-import 'package:youapp_frontend/login/login.dart';
+import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/profile/profile.dart';
-import 'package:youapp_frontend/register/register.dart';
 
 class AppRouter {
   static final GoRouter routes = GoRouter(
