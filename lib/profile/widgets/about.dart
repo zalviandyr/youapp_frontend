@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/iconic_icons.dart';
 import 'package:youapp_frontend/core/core.dart';
+import 'package:youapp_frontend/profile/profile.dart';
 
 class About extends StatefulWidget {
   const About({super.key});
@@ -15,18 +18,20 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
   late final Animation<double> _animation1;
   late final AnimationController _controller2;
   late final Animation<double> _animation2;
+  final double _minHeight = 80.h;
+  final double _maxHeight = 410.h;
   double _height = 80.h;
 
   @override
   void initState() {
     _controller1 = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
     )..forward();
 
     _controller2 = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
     );
 
     _animation1 = CurvedAnimation(parent: _controller1, curve: Curves.easeIn);
@@ -54,14 +59,15 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
       _controller2.reverse();
     }
 
-    setState(() => _height = _height == 300.h ? 80.h : 300.h);
+    setState(() => _height = _height == _maxHeight ? _minHeight : _maxHeight);
   }
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
         width: double.infinity,
         height: _height,
         padding: EdgeInsets.symmetric(
@@ -86,27 +92,48 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
                     fontSize: 14,
                   ),
                 ),
-                GestureDetector(
-                  onTap: _editAction,
-                  child: Icon(
-                    Iconic.pencil,
-                    size: 15.r,
-                  ),
+                Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    FadeTransition(
+                      opacity: _animation1,
+                      child: GestureDetector(
+                        onTap: _editAction,
+                        child: Icon(
+                          Iconic.pencil,
+                          size: 15.r,
+                        ),
+                      ),
+                    ),
+                    FadeTransition(
+                      opacity: _animation2,
+                      child: GestureDetector(
+                        onTap: _editAction,
+                        child: const Text(
+                          'Save & Update',
+                          style: TextStyle(color: Pallette.golden),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Stack(
-              children: [
-                FadeTransition(
-                  opacity: _animation1,
-                  child: const Text(
-                      'Add in your your to help others know you better'),
-                ),
-                FadeTransition(
-                  opacity: _animation2,
-                  child: const Text('Edit'),
-                )
-              ],
+            Expanded(
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  FadeTransition(
+                    opacity: _animation1,
+                    child: const Text(
+                        'Add in your your to help others know you better'),
+                  ),
+                  FadeTransition(
+                    opacity: _animation2,
+                    child: const AboutForm(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

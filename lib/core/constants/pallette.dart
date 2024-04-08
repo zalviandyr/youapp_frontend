@@ -12,4 +12,6 @@ class Pallette {
   static const Color defaultScaffold = Color(0xFF09141A);
   static const Color blackPrimary = Color(0xFF0E191F);
   static const Color blackSecondary = Color(0xFF162329);
+
+  static const Color grey = Color(0xFFD9D9D9);
 }
