@@ -8,11 +8,13 @@ class BorderedDateField extends StatefulWidget {
   final String label;
   final String name;
   final String? hintText;
+  final ValueSetter<DateTime>? onChange;
 
   const BorderedDateField({
     super.key,
     required this.label,
     required this.name,
+    this.onChange,
     this.hintText,
   });
 
@@ -28,12 +30,13 @@ class _BorderedDateFieldState extends State<BorderedDateField> {
     DateTime? date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
       firstDate: DateTime(1950),
     );
 
     if (date != null) {
       state.didChange(date);
+      widget.onChange?.call(date);
 
       setState(() => _selectedData = _format.format(date));
     }

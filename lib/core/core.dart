@@ -5,6 +5,8 @@ export 'app/app.dart';
 export 'constants/pallette.dart';
 export 'constants/config.dart';
 export 'constants/style.dart';
+export 'constants/zodiac.dart';
+export 'constants/horoscope.dart';
 
 // route
 export 'route/app_route.dart';
