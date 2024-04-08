@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const InputField(
                 name: 'password',
                 hintText: 'Enter Password',
-                type: InputType.password,
+                type: InputFieldType.password,
               ),
               SizedBox(height: 15.h),
               Button(

@@ -29,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         slivers: [
           SliverAppBar(
             backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
             title: const Text(
               '@Profile',
               style: TextStyle(

@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:youapp_frontend/core/core.dart';
 
-enum InputType { text, password, email }
+enum InputFieldType { text, password, email }
 
 class InputField extends StatefulWidget {
   final String name;
   final String? hintText;
-  final InputType type;
+  final InputFieldType type;
 
   const InputField({
     super.key,
     required this.name,
     this.hintText,
-    this.type = InputType.text,
+    this.type = InputFieldType.text,
   });
 
   @override
@@ -27,7 +28,7 @@ class _InputFieldState extends State<InputField> {
 
   @override
   void initState() {
-    _isObscure = widget.type == InputType.password;
+    _isObscure = widget.type == InputFieldType.password;
 
     super.initState();
   }
@@ -35,12 +36,20 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      key: Key(widget.name),
       name: widget.name,
       obscureText: _isObscure,
       obscuringCharacter: '*',
-      keyboardType: widget.type == InputType.email
+      keyboardType: widget.type == InputFieldType.email
           ? TextInputType.emailAddress
           : TextInputType.text,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: FormBuilderValidators.compose([
+        if (widget.type == InputFieldType.email) FormBuilderValidators.email(),
+        if (widget.type == InputFieldType.password)
+          FormBuilderValidators.minLength(8),
+        FormBuilderValidators.required(),
+      ]),
       decoration: InputDecoration(
         isDense: true,
         hintText: widget.hintText,
@@ -57,7 +66,7 @@ class _InputFieldState extends State<InputField> {
         ),
         filled: true,
         fillColor: Colors.white.withOpacity(.06),
-        suffixIcon: widget.type == InputType.password
+        suffixIcon: widget.type == InputFieldType.password
             ? GestureDetector(
                 onTap: () => setState(() => _isObscure = !_isObscure),
                 child: ShaderMask(

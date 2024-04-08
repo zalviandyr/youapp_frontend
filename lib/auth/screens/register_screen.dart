@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/core/core.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -12,16 +16,73 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  late AuthBloc _authBloc;
+
+  @override
+  void initState() {
+    _authBloc = BlocProvider.of(context);
+
+    super.initState();
+  }
+
   void _toLogin() => context.pop();
+
+  void _registerAction() {
+    if (_formKey.currentState!.saveAndValidate()) {
+      String email = _formKey.currentState!.value['email'];
+      String username = _formKey.currentState!.value['username'];
+      String password = _formKey.currentState!.value['password'];
+      String confirmPassword = _formKey.currentState!.value['confirmPassword'];
+
+      if (password != confirmPassword) {
+        _formKey.currentState?.fields['confirmPassword']
+            ?.invalidate('Password does not match');
+
+        return;
+      }
+
+      _authBloc.add(AuthRegister(
+        email: email,
+        username: username,
+        password: password,
+      ));
+    }
+  }
+
+  void _authListener(BuildContext context, AuthState state) {
+    if (state is AuthLoading) {
+      SmartDialog.showLoading();
+    }
+
+    if (state is AuthRegisterSuccess ||
+        state is AuthRegisterFailed ||
+        state is AuthError) {
+      if (state is AuthRegisterSuccess) {
+        showSnackbar('User has been created successfully');
+
+        context.pushReplacement(AppRoute.login);
+      }
+
+      if (state is AuthRegisterFailed) {
+        showSnackbar('User already exists', isError: true);
+      }
+
+      SmartDialog.dismiss();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GradientScaffold(
-      body: ListView(
-        padding: EdgeInsets.only(top: 50.h),
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: _authListener,
+      child: GradientScaffold(
+        body: FormBuilder(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.only(top: 50.h),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Text(
                 'Register',
@@ -31,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const InputField(
                 name: 'email',
                 hintText: 'Enter Email',
-                type: InputType.email,
+                type: InputFieldType.email,
               ),
               SizedBox(height: 15.h),
               const InputField(
@@ -42,18 +103,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const InputField(
                 name: 'password',
                 hintText: 'Create Password',
-                type: InputType.password,
+                type: InputFieldType.password,
               ),
               SizedBox(height: 15.h),
               const InputField(
                 name: 'confirmPassword',
                 hintText: 'Confirm Password',
-                type: InputType.password,
+                type: InputFieldType.password,
               ),
               SizedBox(height: 15.h),
               Button(
                 label: 'Register',
-                onPressed: () {},
+                onPressed: _registerAction,
               ),
               SizedBox(height: 35.h),
               Row(
@@ -72,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
