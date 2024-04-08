@@ -7,7 +7,7 @@ class BorderedInputField extends StatelessWidget {
   final String name;
   final String? hintText;
 
-  BorderedInputField({
+  const BorderedInputField({
     super.key,
     required this.label,
     required this.name,
