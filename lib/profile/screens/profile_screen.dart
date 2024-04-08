@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
@@ -14,6 +15,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late ProfileBloc _profileBloc;
+
+  @override
+  void initState() {
+    _profileBloc = BlocProvider.of(context);
+    _profileBloc.add(ProfileFetch());
+
+    super.initState();
+  }
+
   void _logoutAction() {
     App.instance.logout();
 

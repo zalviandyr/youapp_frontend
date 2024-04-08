@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:youapp_frontend/core/core.dart';
 
 class AuthService {
-  static final Dio client = App.instance.client;
+  static final Dio _client = App.instance.client;
 
   static Future<String?> login(AuthModel auth) async {
-    Response response = await client.post('/login', data: {
+    Response response = await _client.post('/login', data: {
       'email': auth.email,
       'username': auth.username,
       'password': auth.password,
@@ -17,7 +17,7 @@ class AuthService {
   }
 
   static Future<bool> register(AuthModel auth) async {
-    Response response = await client.post('/register', data: {
+    Response response = await _client.post('/register', data: {
       'email': auth.email,
       'username': auth.username,
       'password': auth.password,

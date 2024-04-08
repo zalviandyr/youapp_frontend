@@ -8,6 +8,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/core/core.dart';
+import 'package:youapp_frontend/profile/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => AuthBloc()),
+            BlocProvider(create: (_) => ProfileBloc()),
           ],
           child: MaterialApp.router(
             title: Config.appName,

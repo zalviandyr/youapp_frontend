@@ -14,6 +14,7 @@ export 'route/app_router.dart';
 
 // service
 export 'services/auth_service.dart';
+export 'services/profile_service.dart';
 
 // widgets
 export 'widgets/input_field.dart';

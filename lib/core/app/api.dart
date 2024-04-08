@@ -3,6 +3,12 @@ part of 'app.dart';
 class ApiInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    AuthModel? auth = App.instance.currentUser();
+
+    if (auth != null) {
+      options.headers['x-access-token'] = auth.accessToken;
+    }
+
     String name =
         'Request - ${options.uri.toString().replaceAll(options.baseUrl, '')}';
     String data = options.data.toString();
@@ -44,6 +50,7 @@ class Api {
   Dio _init() {
     Dio client = Dio();
 
+    client.interceptors.add(ApiInterceptor());
     client.options.baseUrl = Uri.https(Config.host, '/api').toString();
 
     return client;
