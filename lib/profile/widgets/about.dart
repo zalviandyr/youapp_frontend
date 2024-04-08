@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,12 +21,14 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
   late final Animation<double> _animation1;
   late final AnimationController _controller2;
   late final Animation<double> _animation2;
-  final double _minHeight = 80.h;
-  final double _maxHeight = 410.h;
-  double _height = 80.h;
+  late double _height;
+  final double _minHeight = Platform.isIOS ? 80.h : 100.h;
+  final double _maxHeight = Platform.isIOS ? 410.h : 440.h;
 
   @override
   void initState() {
+    _height = _minHeight;
+
     _controller1 = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 200),
