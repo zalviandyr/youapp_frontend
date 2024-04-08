@@ -8,14 +8,15 @@ import 'package:youapp_frontend/core/core.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
 class AboutForm extends StatefulWidget {
-  const AboutForm({super.key});
+  final GlobalKey<FormBuilderState> formKey;
+
+  const AboutForm({super.key, required this.formKey});
 
   @override
   State<AboutForm> createState() => _AboutFormState();
 }
 
 class _AboutFormState extends State<AboutForm> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   Uint8List? _selectedImage;
 
   void _setImageAction() async {
@@ -30,19 +31,19 @@ class _AboutFormState extends State<AboutForm> {
   }
 
   void _dateChangedAction(DateTime date) {
-    if (_formKey.currentState != null) {
+    if (widget.formKey.currentState != null) {
       String zodiac = Zodiac.getByDate(date);
       String horoscope = Horoscope.getByDate(date);
 
-      _formKey.currentState!.fields['zodiac']!.didChange(zodiac);
-      _formKey.currentState!.fields['horoscope']!.didChange(horoscope);
+      widget.formKey.currentState!.fields['zodiac']!.didChange(zodiac);
+      widget.formKey.currentState!.fields['horoscope']!.didChange(horoscope);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
-      key: _formKey,
+      key: widget.formKey,
       child: ListView(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
