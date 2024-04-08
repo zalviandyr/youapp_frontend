@@ -4,10 +4,12 @@ import 'package:youapp_frontend/core/core.dart';
 
 class GradientScaffold extends StatelessWidget {
   final Widget body;
+  final EdgeInsetsGeometry? padding;
 
   const GradientScaffold({
     super.key,
     required this.body,
+    this.padding,
   });
 
   @override
@@ -29,7 +31,7 @@ class GradientScaffold extends StatelessWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: padding ?? EdgeInsets.symmetric(horizontal: 20.w),
             child: body,
           ),
         ),
