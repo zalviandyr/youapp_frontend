@@ -36,11 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
       String username = _formKey.currentState!.value['username'];
       String password = _formKey.currentState!.value['password'];
 
-      _authBloc.add(AuthLogin(
+      AuthModel auth = AuthModel(
         email: email,
         username: username,
         password: password,
-      ));
+      );
+
+      _authBloc.add(AuthLogin(auth: auth));
     }
   }
 

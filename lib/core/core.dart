@@ -26,3 +26,6 @@ export 'widgets/gradient_scaffold.dart';
 export 'widgets/default_scaffold.dart';
 export 'widgets/loading_dialog.dart';
 export 'widgets/snackbar.dart';
+
+// models
+export 'models/auth_model.dart';

@@ -4,15 +4,11 @@ import 'package:youapp_frontend/core/core.dart';
 class AuthService {
   static final Dio client = App.instance.client;
 
-  static Future<String?> login({
-    required String email,
-    required String username,
-    required String password,
-  }) async {
+  static Future<String?> login(AuthModel auth) async {
     Response response = await client.post('/login', data: {
-      'email': email,
-      'username': username,
-      'password': password,
+      'email': auth.email,
+      'username': auth.username,
+      'password': auth.password,
     });
 
     Map<String, dynamic> data = response.data;
@@ -20,15 +16,11 @@ class AuthService {
     return data['access_token'];
   }
 
-  static Future<bool> register({
-    required String email,
-    required String username,
-    required String password,
-  }) async {
+  static Future<bool> register(AuthModel auth) async {
     Response response = await client.post('/register', data: {
-      'email': email,
-      'username': username,
-      'password': password,
+      'email': auth.email,
+      'username': auth.username,
+      'password': auth.password,
     });
     Map<String, dynamic> data = response.data;
     String message = data['message'];

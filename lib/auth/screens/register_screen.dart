@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/core/core.dart';
+import 'package:youapp_frontend/core/models/auth_model.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -44,11 +45,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return;
       }
 
-      _authBloc.add(AuthRegister(
+      AuthModel auth = AuthModel(
         email: email,
         username: username,
         password: password,
-      ));
+      );
+
+      _authBloc.add(AuthRegister(auth: auth));
     }
   }
 
