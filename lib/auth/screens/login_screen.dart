@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _loginAction() {
     if (_formKey.currentState!.saveAndValidate()) {
-      Focus.of(context).unfocus();
+      FocusScope.of(context).unfocus();
 
       String email = _formKey.currentState!.value['email'];
       String username = _formKey.currentState!.value['username'];

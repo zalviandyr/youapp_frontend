@@ -103,7 +103,7 @@ class _InterestScreenState extends State<InterestScreen> {
               formKey: _tagKey,
               separatorCharacter: ';',
               placeChipsSectionAbove: false,
-              validateInput: true,
+              validateInput: false,
               onSaved: _tagSaveAction,
               validateInputMethod: (String value) {
                 if (value.isEmpty) {

@@ -35,6 +35,7 @@ class BorderedInputField extends StatelessWidget {
             name: name,
             textAlign: TextAlign.end,
             style: const TextStyle(fontSize: 13),
+            keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: hintText,
               isDense: true,
