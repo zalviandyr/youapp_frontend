@@ -11,12 +11,13 @@ class AppRouter {
     navigatorKey: App.instance.navigator,
     redirect: (context, state) {
       AuthModel? auth = App.instance.currentUser();
+      List<String> whitelist = [AppRoute.login, AppRoute.register];
 
-      if (auth == null) {
-        return AppRoute.login;
+      if (whitelist.contains(state.fullPath) || auth != null) {
+        return null;
       }
 
-      return null;
+      return AppRoute.login;
     },
     routes: [
       GoRoute(
