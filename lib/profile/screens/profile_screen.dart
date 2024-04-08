@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/iconic_icons.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final AuthModel _auth = App.instance.currentUser()!;
   late ProfileBloc _profileBloc;
 
   @override
@@ -31,44 +33,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
     context.pushReplacement(AppRoute.login);
   }
 
+  void _saveAboutAction(ProfileModel profile) {
+    _profileBloc.add(ProfileSave(profile: profile));
+  }
+
   void _toInterest() {
     context.push(AppRoute.interest);
   }
 
+  void _profileListener(BuildContext context, ProfileState state) {
+    if (state is ProfileLoading) {
+      SmartDialog.showLoading();
+    }
+
+    if (state is ProfileSaveSuccess ||
+        state is ProfileFetchSuccess ||
+        state is ProfileError) {
+      SmartDialog.dismiss();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultScaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.transparent,
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            title: const Text(
-              '@Profile',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  FontAwesome.logout,
-                  size: 20.r,
-                  color: Colors.red.withOpacity(.6),
+    return BlocListener<ProfileBloc, ProfileState>(
+      listener: _profileListener,
+      child: DefaultScaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              title: Text(
+                '@${_auth.username}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
-                onPressed: _logoutAction,
-              )
-            ],
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: 15.h)),
-          _buildProfilePicture(),
-          SliverToBoxAdapter(child: SizedBox(height: 15.h)),
-          const About(),
-          SliverToBoxAdapter(child: SizedBox(height: 15.h)),
-          Interest(onEdit: _toInterest),
-        ],
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    FontAwesome.logout,
+                    size: 20.r,
+                    color: Colors.red.withOpacity(.6),
+                  ),
+                  onPressed: _logoutAction,
+                )
+              ],
+            ),
+            SliverToBoxAdapter(child: SizedBox(height: 15.h)),
+            _buildProfilePicture(),
+            SliverToBoxAdapter(child: SizedBox(height: 15.h)),
+            About(onSave: _saveAboutAction),
+            SliverToBoxAdapter(child: SizedBox(height: 15.h)),
+            Interest(onEdit: _toInterest),
+          ],
+        ),
       ),
     );
   }

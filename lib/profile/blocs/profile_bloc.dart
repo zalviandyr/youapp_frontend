@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e, trace) {
       onError(e, trace);
 
-      emit(ProfileError());
+      emit(ProfileSaveFailed());
     }
   }
 
@@ -28,13 +28,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       emit(ProfileLoading());
 
-      await ProfileService.getProfile();
+      ProfileModel profile = await ProfileService.getProfile();
 
-      // emit(ProfileFetchSuccess(profile));
+      emit(ProfileFetchSuccess(profile: profile));
     } catch (e, trace) {
       onError(e, trace);
 
-      emit(ProfileError());
+      emit(ProfileFetchFailed());
     }
   }
 }

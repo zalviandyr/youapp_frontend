@@ -14,7 +14,9 @@ import 'package:youapp_frontend/core/core.dart';
 import 'package:youapp_frontend/profile/profile.dart';
 
 class About extends StatefulWidget {
-  const About({super.key});
+  final ValueSetter<ProfileModel> onSave;
+
+  const About({super.key, required this.onSave});
 
   @override
   State<About> createState() => _AboutState();
@@ -25,7 +27,6 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
   late final Animation<double> _animation1;
   late final AnimationController _controller2;
   late final Animation<double> _animation2;
-  late final ProfileBloc _profileBloc;
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   final double _minHeight = Platform.isIOS ? 80.h : 100.h;
   final double _maxHeight = Platform.isIOS ? 430.h : 420.h;
@@ -33,7 +34,6 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _profileBloc = BlocProvider.of(context);
     _height = _minHeight;
 
     _controller1 = AnimationController(
@@ -100,27 +100,20 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
         interests: [],
       );
 
-      _profileBloc.add(ProfileSave(profile: profile));
+      widget.onSave(profile);
     } else {
       _showEdit();
     }
   }
 
   void _profileListener(BuildContext context, ProfileState state) {
-    if (state is ProfileLoading) {
-      SmartDialog.showLoading();
+    if (state is ProfileSaveSuccess) {
+      SmartDialog.showToast('Profile updated successfully');
+      _hideEdit();
     }
 
-    if (state is ProfileSaveSuccess || state is ProfileError) {
-      if (state is ProfileSaveSuccess) {
-        SmartDialog.showToast('Profile updated successfully');
-
-        _hideEdit();
-      } else {
-        SmartDialog.showToast('Failed to update profile');
-      }
-
-      SmartDialog.dismiss();
+    if (state is ProfileSaveFailed) {
+      SmartDialog.showToast('Failed to update profile');
     }
   }
 

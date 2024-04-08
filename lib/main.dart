@@ -16,6 +16,9 @@ void main() async {
   // init app
   await App.instance.init();
 
+  // bloc observer
+  Bloc.observer = AppBlocObserver();
+
   runApp(const MyApp());
 }
 

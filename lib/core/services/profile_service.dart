@@ -11,11 +11,11 @@ class ProfileService {
     );
   }
 
-  static Future<void> getProfile() async {
+  static Future<ProfileModel> getProfile() async {
     Response response = await _client.get('/getProfile');
 
     Map<String, dynamic> data = response.data;
 
-    print(data);
+    return ProfileModel.fromJson(data['data']);
   }
 }

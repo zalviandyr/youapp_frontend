@@ -31,3 +31,6 @@ export 'widgets/snackbar.dart';
 // models
 export 'models/auth_model.dart';
 export 'models/profile_model.dart';
+
+// blcos
+export 'blocs/app_bloc_observer.dart';

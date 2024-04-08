@@ -21,6 +21,20 @@ class ProfileModel {
     required this.interests,
   });
 
+  factory ProfileModel.fromJson(Map<String, dynamic> json) {
+    return ProfileModel(
+      name: json['name'],
+      gender: json['gender'],
+      birthday: json['birthday'],
+      horoscope: json['horoscope'],
+      zodiac: json['zodiac'],
+      profilePicture: json['profilePicture'],
+      height: json['height'],
+      weight: json['weight'],
+      interests: (json['interests'] as List).map((e) => e.toString()).toList(),
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'name': name,
