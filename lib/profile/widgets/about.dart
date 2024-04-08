@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttericon/iconic_icons.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:youapp_frontend/core/core.dart';
 import 'package:youapp_frontend/profile/profile.dart';
 
@@ -109,9 +110,10 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
                       opacity: _animation2,
                       child: GestureDetector(
                         onTap: _editAction,
-                        child: const Text(
+                        child: GradientText(
+                          gradientDirection: GradientDirection.ttb,
                           'Save & Update',
-                          style: TextStyle(color: Pallette.golden),
+                          colors: Pallette.goldenGradient,
                         ),
                       ),
                     ),

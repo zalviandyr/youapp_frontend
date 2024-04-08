@@ -5,12 +5,17 @@ import 'package:youapp_frontend/core/core.dart';
 class GradientScaffold extends StatelessWidget {
   final Widget body;
 
-  const GradientScaffold({super.key, required this.body});
+  const GradientScaffold({
+    super.key,
+    required this.body,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: double.infinity,
+        width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

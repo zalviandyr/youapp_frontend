@@ -26,6 +26,11 @@ class AppRouter {
         pageBuilder: (context, state) =>
             _transitionPage(state, const ProfileScreen()),
       ),
+      GoRoute(
+        path: AppRoute.interest,
+        pageBuilder: (context, state) =>
+            _transitionPage(state, const InterestScreen()),
+      ),
     ],
   );
 

@@ -1,7 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:youapp_frontend/core/core.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -56,19 +56,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 onPressed: () {},
               ),
               SizedBox(height: 35.h),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(text: 'Have an account? '),
-                      TextSpan(
-                        text: 'Login here',
-                        style: const TextStyle(color: Pallette.golden),
-                        recognizer: TapGestureRecognizer()..onTap = _toLogin,
-                      ),
-                    ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Have an account? '),
+                  GestureDetector(
+                    onTap: _toLogin,
+                    child: GradientText(
+                      'Login here',
+                      gradientDirection: GradientDirection.ttb,
+                      colors: Pallette.goldenGradient,
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

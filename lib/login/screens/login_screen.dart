@@ -1,7 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:youapp_frontend/core/core.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -48,21 +48,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _loginAction,
               ),
               SizedBox(height: 35.h),
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'No account? ',
-                      ),
-                      TextSpan(
-                        text: 'Register here',
-                        style: const TextStyle(color: Pallette.golden),
-                        recognizer: TapGestureRecognizer()..onTap = _toRegister,
-                      ),
-                    ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('No account? '),
+                  GestureDetector(
+                    onTap: _toRegister,
+                    child: GradientText(
+                      'Register Here',
+                      gradientDirection: GradientDirection.ttb,
+                      colors: Pallette.goldenGradient,
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),

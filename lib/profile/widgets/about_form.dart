@@ -69,9 +69,13 @@ class _AboutFormState extends State<AboutForm> {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : const Icon(
-                            Octicons.plus,
-                            color: Pallette.golden,
+                        : ShaderMask(
+                            shaderCallback: (bounds) => LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: Pallette.goldenGradient,
+                            ).createShader(bounds),
+                            child: const Icon(Octicons.plus),
                           ),
                   ),
                 ),

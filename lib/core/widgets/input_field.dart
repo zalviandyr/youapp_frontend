@@ -58,12 +58,18 @@ class _InputFieldState extends State<InputField> {
         filled: true,
         fillColor: Colors.white.withOpacity(.06),
         suffixIcon: widget.type == InputType.password
-            ? IconButton(
-                icon: Icon(
-                  _isObscure ? FontAwesome.eye_off : FontAwesome.eye,
-                  color: Pallette.golden,
+            ? GestureDetector(
+                onTap: () => setState(() => _isObscure = !_isObscure),
+                child: ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: Pallette.goldenGradient,
+                  ).createShader(bounds),
+                  child: Icon(
+                    _isObscure ? FontAwesome.eye_off : FontAwesome.eye,
+                  ),
                 ),
-                onPressed: () => setState(() => _isObscure = !_isObscure),
               )
             : null,
       ),
