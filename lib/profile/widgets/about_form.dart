@@ -1,10 +1,31 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:youapp_frontend/core/core.dart';
 import 'package:fluttericon/octicons_icons.dart';
 
-class AboutForm extends StatelessWidget {
+class AboutForm extends StatefulWidget {
   const AboutForm({super.key});
+
+  @override
+  State<AboutForm> createState() => _AboutFormState();
+}
+
+class _AboutFormState extends State<AboutForm> {
+  Uint8List? _selectedImage;
+
+  void _setImageAction() async {
+    ImagePicker picker = ImagePicker();
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      _selectedImage = await image.readAsBytes();
+
+      setState(() => {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +38,27 @@ class AboutForm extends StatelessWidget {
             Material(
               color: Colors.transparent,
               child: InkWell(
-                onTap: () {},
+                onTap: _setImageAction,
                 borderRadius: BorderRadius.circular(10.r),
                 child: Container(
-                  padding: EdgeInsets.all(13.r),
+                  width: 50.r,
+                  height: 50.r,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(.08),
                     borderRadius: BorderRadius.circular(10.r),
                   ),
-                  child: const Icon(
-                    Octicons.plus,
-                    color: Pallette.golden,
-                  ),
+                  child: _selectedImage != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: Image.memory(
+                            _selectedImage!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : const Icon(
+                          Octicons.plus,
+                          color: Pallette.golden,
+                        ),
                 ),
               ),
             ),
