@@ -23,7 +23,7 @@ class _AboutState extends State<About> with TickerProviderStateMixin {
   late final Animation<double> _animation2;
   late double _height;
   final double _minHeight = Platform.isIOS ? 80.h : 100.h;
-  final double _maxHeight = Platform.isIOS ? 410.h : 440.h;
+  final double _maxHeight = Platform.isIOS ? 410.h : 430.h;
 
   @override
   void initState() {
