@@ -12,13 +12,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
 
-      String? token = await AuthService.login(
-        email: event.email,
-        username: event.username,
-        password: event.password,
-      );
+      String? token = await AuthService.login(event.auth);
 
       if (token != null) {
+        AuthModel auth = event.auth.copyWith(accessToken: token);
+        App.instance.storeUser(auth);
+
         emit(AuthLoginSuccess());
       } else {
         emit(AuthLoginFailed());
@@ -34,11 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
 
-      bool isRegistered = await AuthService.register(
-        email: event.email,
-        username: event.username,
-        password: event.password,
-      );
+      bool isRegistered = await AuthService.register(event.auth);
 
       if (isRegistered) {
         emit(AuthRegisterSuccess());

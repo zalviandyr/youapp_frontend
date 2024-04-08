@@ -9,6 +9,15 @@ class AppRouter {
   static final GoRouter routes = GoRouter(
     initialLocation: AppRoute.profile,
     navigatorKey: App.instance.navigator,
+    redirect: (context, state) {
+      AuthModel? auth = App.instance.currentUser();
+
+      if (auth == null) {
+        return AppRoute.login;
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: AppRoute.login,

@@ -9,9 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/core/core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // init app
-  App.instance.init();
+  await App.instance.init();
 
   runApp(const MyApp());
 }

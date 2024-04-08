@@ -15,6 +15,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   void _logoutAction() {
+    App.instance.logout();
+
     context.pushReplacement(AppRoute.login);
   }
 
