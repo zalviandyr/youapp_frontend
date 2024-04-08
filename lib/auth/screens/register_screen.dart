@@ -30,6 +30,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void _registerAction() {
     if (_formKey.currentState!.saveAndValidate()) {
+      Focus.of(context).unfocus();
+
       String email = _formKey.currentState!.value['email'];
       String username = _formKey.currentState!.value['username'];
       String password = _formKey.currentState!.value['password'];
