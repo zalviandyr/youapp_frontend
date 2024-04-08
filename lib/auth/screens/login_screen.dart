@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:youapp_frontend/auth/auth.dart';
 import 'package:youapp_frontend/core/core.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,20 +16,67 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  late AuthBloc _authBloc;
+
+  @override
+  initState() {
+    _authBloc = BlocProvider.of(context);
+
+    super.initState();
+  }
+
   void _toRegister() => context.push(AppRoute.register);
 
   void _loginAction() {
-    context.pushReplacement(AppRoute.profile);
+    if (_formKey.currentState!.saveAndValidate()) {
+      String email = _formKey.currentState!.value['email'];
+      String username = _formKey.currentState!.value['username'];
+      String password = _formKey.currentState!.value['password'];
+
+      _authBloc.add(AuthLogin(
+        email: email,
+        username: username,
+        password: password,
+      ));
+
+      // context.pushReplacement(AppRoute.profile);
+    }
+  }
+
+  void _authListener(BuildContext context, AuthState state) {
+    if (state is AuthLoading) {
+      SmartDialog.showLoading();
+    }
+
+    if (state is AuthLoginSuccess ||
+        state is AuthLoginFailed ||
+        state is AuthError) {
+      if (state is AuthLoginSuccess) {
+        showSnackbar('User has been logged in successfully');
+
+        context.pushReplacement(AppRoute.profile);
+      }
+
+      if (state is AuthLoginFailed) {
+        showSnackbar('User not found', isError: true);
+      }
+
+      SmartDialog.dismiss();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return GradientScaffold(
-      body: ListView(
-        padding: EdgeInsets.only(top: 50.h),
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: _authListener,
+      child: GradientScaffold(
+        body: FormBuilder(
+          key: _formKey,
+          child: ListView(
+            padding: EdgeInsets.only(top: 50.h),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               Text(
                 'Login',
@@ -34,7 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 25.h),
               const InputField(
                 name: 'username',
-                hintText: 'Enter Username/Email',
+                hintText: 'Enter Username',
+              ),
+              SizedBox(height: 15.h),
+              const InputField(
+                name: 'email',
+                hintText: 'Enter Email',
+                type: InputFieldType.email,
               ),
               SizedBox(height: 15.h),
               const InputField(
@@ -64,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
