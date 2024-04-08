@@ -1,16 +1,25 @@
-# youapp_frontend
+# YouApp Frontend
 
-A new Flutter project.
+## Technologies
 
-## Getting Started
+- Dio
+- Bloc
+- GoRouter
+- Form Builder
 
-This project is a starting point for a Flutter application.
+## Requirement
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter v3.19
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Login and Register
+- Update profile
+- Auto detect Horoscope and Zodiac
+- Android and iOS supported
+
+## Setup Local
+
+- Clone this repository
+- Run `flutter pub get` to install all dependencies.
+- Run application
