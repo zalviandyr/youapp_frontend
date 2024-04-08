@@ -92,8 +92,8 @@ class _AboutFormState extends State<AboutForm> {
           ..._buildDateField('birth_date', 'Birthday:', 'DD MM YYYY'),
           ..._buildInputField('horoscope', 'Horoscope:', '--'),
           ..._buildInputField('zodiac', 'Zodiac:', '--'),
-          ..._buildInputField('height', 'Height:', 'Add Height'),
-          ..._buildInputField('weight', 'Weight:', 'Add Weight'),
+          ..._buildNumberField('height', 'Height:', 'Add Height', 'cm'),
+          ..._buildNumberField('weight', 'Weight:', 'Add Weight', 'kg'),
         ],
       ),
     );
@@ -106,6 +106,20 @@ class _AboutFormState extends State<AboutForm> {
         label: label,
         name: name,
         hintText: hintText,
+      ),
+    ];
+  }
+
+  List<Widget> _buildNumberField(
+      String name, String label, String hintText, String unit) {
+    return [
+      SizedBox(height: 12.h),
+      BorderedInputField(
+        label: label,
+        name: name,
+        hintText: hintText,
+        type: BorderedInputFieldType.number,
+        suffixText: unit,
       ),
     ];
   }

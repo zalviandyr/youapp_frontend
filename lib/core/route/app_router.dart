@@ -7,7 +7,7 @@ import 'package:youapp_frontend/profile/profile.dart';
 
 class AppRouter {
   static final GoRouter routes = GoRouter(
-    initialLocation: AppRoute.login,
+    initialLocation: AppRoute.profile,
     navigatorKey: App.instance.navigator,
     routes: [
       GoRoute(

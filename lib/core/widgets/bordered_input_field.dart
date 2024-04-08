@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:youapp_frontend/core/core.dart';
 
+enum BorderedInputFieldType {
+  text,
+  number,
+}
+
 class BorderedInputField extends StatelessWidget {
   final String label;
   final String name;
   final String? hintText;
+  final String? suffixText;
+  final BorderedInputFieldType? type;
 
   const BorderedInputField({
     super.key,
     required this.label,
     required this.name,
     this.hintText,
+    this.suffixText,
+    this.type,
   });
 
   @override
@@ -35,7 +44,9 @@ class BorderedInputField extends StatelessWidget {
             name: name,
             textAlign: TextAlign.end,
             style: const TextStyle(fontSize: 13),
-            keyboardType: TextInputType.text,
+            keyboardType: type == BorderedInputFieldType.number
+                ? TextInputType.number
+                : TextInputType.text,
             decoration: InputDecoration(
               hintText: hintText,
               isDense: true,
@@ -44,6 +55,8 @@ class BorderedInputField extends StatelessWidget {
               focusedBorder: Style.focusedBorder,
               filled: true,
               fillColor: Pallette.grey.withOpacity(.06),
+              suffixText: suffixText,
+              suffixStyle: const TextStyle(color: Colors.white),
             ),
           ),
         ),
