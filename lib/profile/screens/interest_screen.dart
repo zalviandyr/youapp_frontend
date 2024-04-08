@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simple_chips_input/simple_chips_input.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:textfield_tags/textfield_tags.dart';
 import 'package:youapp_frontend/core/core.dart';
 import 'package:fluttericon/modern_pictograms_icons.dart';
 
@@ -15,16 +14,8 @@ class InterestScreen extends StatefulWidget {
 }
 
 class _InterestScreenState extends State<InterestScreen> {
-  final StringTagController _stringTagController = StringTagController();
   final GlobalKey<FormState> _tagKey = GlobalKey();
   String outputSelectChipsInput = '';
-
-  @override
-  void dispose() {
-    _stringTagController.dispose();
-
-    super.dispose();
-  }
 
   void _backAction() => context.pop();
 
